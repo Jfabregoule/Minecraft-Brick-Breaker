@@ -5,7 +5,7 @@
 
 #include "GameWindow.h"
 
-Hud::Hud(GameWindow *window) {
+Hud::Hud() {
 
 	if (!h_font.loadFromFile("rsrc/font/font.ttf"))
 	{

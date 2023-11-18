@@ -38,6 +38,11 @@ float GameWindow::GetHeight() {
 ---------------------------------------------------------------------------------
 */
 
+void	GameWindow::SetView() {
+	sf::View view(sf::Vector2f(400, 300), sf::Vector2f(800, 600));
+	w_window->setView(view);
+}
+
 void	GameWindow::DrawObject(GameObject *gameObject){
 	w_window->draw(gameObject->o_sprite);
 }

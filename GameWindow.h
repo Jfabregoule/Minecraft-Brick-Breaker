@@ -24,8 +24,9 @@ public:
 
 	// Main Methods
 
+	void				SetView();
 	void				DrawObject(GameObject *gameObject);
-	void				RefreshScreen();   
+	void				RefreshScreen();
 
 	// Get Methods
 

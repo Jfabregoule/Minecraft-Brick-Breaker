@@ -26,8 +26,10 @@ Game::Game() {
 
 	g_level = 0;
 	g_window = new GameWindow();
+	g_window->SetView();
 	g_icon = new sf::Image();
 	g_music = new Music();
+	g_hud = new Hud();
 
 	g_menu = true;
 	g_win = false;
@@ -157,7 +159,7 @@ void	Game::GenerateCanon() {
 	g_canon->SetOrientation(0, 1);
 }
 void	Game::GenerateHud() {
-	g_hud = new Hud(g_window);
+	g_hud = new Hud();
 }
 
 
