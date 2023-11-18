@@ -26,10 +26,9 @@ Game::Game() {
 
 	g_level = 0;
 	g_window = new GameWindow();
-	g_window->SetView();
 	g_icon = new sf::Image();
 	g_music = new Music();
-	g_hud = new Hud();
+	g_hud = new Hud(g_window);
 
 	g_menu = true;
 	g_win = false;
@@ -82,8 +81,8 @@ void Game::GenerateSprites() {
 }
 
 void	Game::GenerateTerrain() {
-	float	x = 40;
-	float	y = 65;
+	float	x = 60;
+	float	y = 80;
 	int		sizeX = g_map->GetWidth();
 	int		sizeY = g_map->GetHeight();
 
@@ -98,8 +97,8 @@ void	Game::GenerateTerrain() {
 			}
 			x += (60);
 		}
-		x = 40;
-		y += 40;
+		x = 60;
+		y += 60;
 	}
 	if (g_bricks.empty())
 	{
@@ -159,7 +158,7 @@ void	Game::GenerateCanon() {
 	g_canon->SetOrientation(0, 1);
 }
 void	Game::GenerateHud() {
-	g_hud = new Hud();
+	g_hud = new Hud(g_window);
 }
 
 
@@ -258,7 +257,7 @@ int	Game::NewBall() {
 	if (!g_remainingBalls.empty()) {
 		g_currentBall = g_remainingBalls.at(g_remainingBalls.size() - 1);
 		g_remainingBalls.pop_back();
-		g_currentBall->SetPos(g_window->GetWidth() / 2, g_window->GetHeight() - 25);
+		g_currentBall->SetPos(g_canon->o_posX, g_window->GetHeight() - 25);
 		return 1;
 	}
 	return 0;
@@ -326,6 +325,7 @@ void Game::CollCheck() {
 
 		if (g_currentBall->CheckCollision(g_borders[i], g_deltaTime)) {
 			if (i == 3) {
+				g_canon->SetPos(g_currentBall->o_posX, g_window->GetHeight() - 25);
 				if (!NewBall()) {
 					g_lose = true;
 					g_isRunning = false;
@@ -425,17 +425,23 @@ void Game::InitLevel() {
 void Game::GetPath(Vector2i MousePos) {
 	g_menu = true;
 
-	if (MousePos.y >= 22 && MousePos.y <= 276 && MousePos.x >= 22 && MousePos.x <= 246)
+	if (MousePos.y >= 0.037 * g_window->GetHeight() and MousePos.y <= 0.46 * g_window->GetHeight() \
+		and MousePos.x >= 0.027 * g_window->GetWidth() and MousePos.x <= 0.307 * g_window->GetWidth())
 		g_level = 1;
-	else if (MousePos.y >= 22 && MousePos.y <= 276 and MousePos.x >= 288 && MousePos.x <= 512)
+	else if (MousePos.y >= 0.037 * g_window->GetHeight() and MousePos.y <= 0.46 * g_window->GetHeight() \
+		and MousePos.x >= 0.34 * g_window->GetWidth() and MousePos.x <= 0.64 * g_window->GetWidth())
 		g_level = 2;
-	else if (MousePos.y >= 22 && MousePos.y <= 276 and MousePos.x >= 554 && MousePos.x <= 778)
+	else if (MousePos.y >= 0.037 * g_window->GetHeight() and MousePos.y <= 0.46 * g_window->GetHeight() \
+		and MousePos.x >= 0.69 * g_window->GetWidth() and MousePos.x <= 0.97 * g_window->GetWidth())
 		g_level = 3;
-	else if (MousePos.y >= 322 && MousePos.y <= 576 and MousePos.x >= 22 && MousePos.x <= 246)
+	else if (MousePos.y >= 0.553 * g_window->GetHeight() and MousePos.y <= 0.96 * g_window->GetHeight() \
+		and MousePos.x >= 0.027 * g_window->GetWidth() and MousePos.x <= 0.307 * g_window->GetWidth())
 		g_level = 4;
-	else if (MousePos.y >= 322 && MousePos.y <= 576 and MousePos.x >= 288 && MousePos.x <= 512)
+	else if (MousePos.y >= 0.553 * g_window->GetHeight() and MousePos.y <= 0.96 * g_window->GetHeight() and \
+		MousePos.x >= 0.34 * g_window->GetWidth() and MousePos.x <= 0.64 * g_window->GetWidth())
 		g_level = 5;
-	else if (MousePos.y >= 322 && MousePos.y <= 576 and MousePos.x >= 554 && MousePos.x <= 778)
+	else if (MousePos.y >= 0.553 * g_window->GetHeight() and MousePos.y <= 0.96 * g_window->GetHeight() and \
+		MousePos.x >= 0.69 * g_window->GetWidth() and MousePos.x <= 0.97 * g_window->GetWidth())
 		g_level = 6;
 	if (g_level != 0) {
 		InitLevel();
@@ -523,6 +529,7 @@ void Game::ChooseLevel() {
 	while (g_menu) {
 		while (g_window->w_window->pollEvent(event))
 		{
+			DrawMenu();
 			if (event.type == Event::Closed)
 				CloseWindow();
 			if (Mouse::isButtonPressed(Mouse::Button::Left))

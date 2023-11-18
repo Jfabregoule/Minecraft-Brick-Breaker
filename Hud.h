@@ -15,7 +15,7 @@ public:
 
 	sf::Text					h_balls;
 
-	Hud();
+	Hud(GameWindow *window);
 
 	//Main Methods
 

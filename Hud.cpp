@@ -5,7 +5,7 @@
 
 #include "GameWindow.h"
 
-Hud::Hud() {
+Hud::Hud(GameWindow *window) {
 
 	if (!h_font.loadFromFile("rsrc/font/font.ttf"))
 	{
@@ -13,10 +13,10 @@ Hud::Hud() {
 		exit(1);
 	}
 	h_balls.setFont(h_font);
-	h_balls.setCharacterSize(24);
+	h_balls.setCharacterSize(35);
 	h_balls.setFillColor(sf::Color::White);
 	h_balls.setStyle(sf::Text::Bold);
-	h_balls.setPosition(755, 0);
+	h_balls.setPosition(0.965 * window->GetWidth(), 0);
 }
 
 void	Hud::DrawHud(GameWindow *window, int ball_num) {

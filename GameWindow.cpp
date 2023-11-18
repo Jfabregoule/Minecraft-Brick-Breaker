@@ -11,11 +11,13 @@ using namespace sf;
 */
 
 GameWindow::GameWindow(){
-	w_width = 800.f;
-	w_height = 600.f;
+	w_width = 1920.f;
+	w_height = 1080.f;
 	w_name = "Minecraft Brick Breaker";
 
 	w_window = new sf::RenderWindow(sf::VideoMode((unsigned int)w_width, (unsigned int)w_height), w_name);
+	sf::View view(sf::Vector2f(960, 540), sf::Vector2f(1920, 1080));
+	w_window->setView(view);
 }
 
 /*
@@ -37,11 +39,6 @@ float GameWindow::GetHeight() {
 |				Here are all the main methods									|
 ---------------------------------------------------------------------------------
 */
-
-void	GameWindow::SetView() {
-	sf::View view(sf::Vector2f(400, 300), sf::Vector2f(800, 600));
-	w_window->setView(view);
-}
 
 void	GameWindow::DrawObject(GameObject *gameObject){
 	w_window->draw(gameObject->o_sprite);

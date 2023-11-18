@@ -15,8 +15,6 @@ Canon::Canon(sf::Sprite* sprite) : GameObject(sprite) {
 void	Canon::FollowMouse(GameWindow *window) {
 	if (window->w_window->mapPixelToCoords(Mouse::getPosition(*window->w_window)).y < o_posY);
 	SetOrientation(window->w_window->mapPixelToCoords(Mouse::getPosition(*window->w_window)).x, window->w_window->mapPixelToCoords(Mouse::getPosition(*window->w_window)).y);
-	//if (Mouse::getPosition(*window->w_window).y < o_posY - 50) 
-		//SetOrientation(Mouse::getPosition(*window->w_window).x, Mouse::getPosition(*window->w_window).y);
 }
 
 void Canon::SetOrientation(int x, int y)

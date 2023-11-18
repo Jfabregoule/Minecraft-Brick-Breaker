@@ -53,26 +53,24 @@ int		Map::GetHeight() {
 // Get the Supposed size of the map based on the map txt file
 
 void		Map::GetSize() {
-	char* x;
-	char* y;
+	char*	x;
+	char*	y;
+	int		sizex = 0;
+	int		sizey = 0;
 	int		lenLine = m_config->size();
 
-	y = new char[2];
-	if (m_config->at(1) >= 48 and m_config->at(1) <= 57) {
-		x = new char[3];
-		x[0] = m_config->at(0);
-		x[1] = m_config->at(1);
-		x[2] = '\0';
-		y[0] = m_config->at(3);
-		y[1] = '\0';
-	}
-	else {
-		x = new char[2];
-		x[0] = m_config->at(0);
-		x[1] = '\0';
-		y[0] = m_config->at(2);
-		y[1] = '\0';
-	}
+	for (int i = 0; (m_config->at(i) and m_config->at(i) >= 48 and m_config->at(i) <= 57); i++)
+		sizex++;
+	for (int j = sizex + 1; j < m_config->length(); j++)
+		sizey++;
+	x = new char[sizex + 1];
+	y = new char[sizey + 1];
+	for (int i = 0; i < sizex; i++)
+		x[i] = m_config->at(i);
+	x[sizex] = '\0';
+	for (int j = 0; j < sizey; j++)
+		y[j] = m_config->at(sizex + j + 1);
+	y[sizey] = '\0';
 	m_sizeX = stoi(x);
 	m_sizeY = stoi(y);
 	delete[] x;
