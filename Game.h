@@ -43,6 +43,7 @@ private:
 
 	int							g_bricksNum;
 	std::vector<Brick*>			g_bricks;
+	sf::Clock					*g_shotClock;
 
 	int							g_ballNum;
 	std::vector<Ball*>			g_remainingBalls;

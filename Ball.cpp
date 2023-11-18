@@ -7,8 +7,6 @@
 #include <cmath>
 #include <iostream>
 
-#define SPEED 500.0f
-
 using namespace std;
 using namespace math;
 
@@ -17,11 +15,12 @@ Ball::Ball(sf::Sprite *sprite) : GameObject(sprite) {
 	o_height = 20.f;
 	o_sprite.setOrigin(10.0f, 10.0f);
 	isMoving = false;
+	speed = 500.0f;
 }
 
 void Ball::Move(float deltaTime) {
-	o_posX += o_directionX * deltaTime * SPEED;
-	o_posY += o_directionY * deltaTime * SPEED;
+	o_posX += o_directionX * deltaTime * speed;
+	o_posY += o_directionY * deltaTime * speed;
 	o_sprite.setPosition(o_posX, o_posY);
 }
 

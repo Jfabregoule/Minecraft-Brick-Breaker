@@ -33,6 +33,7 @@ private:
     bool            IsLineFormated(std::string* line);
     bool            IsHeightFormated();
     bool            IsMapFormated();
+    bool            IsSizeValid();
 
     void            GetSize();
 

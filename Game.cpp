@@ -29,6 +29,7 @@ Game::Game() {
 	g_icon = new sf::Image();
 	g_music = new Music();
 	g_hud = new Hud(g_window);
+	g_shotClock = new sf::Clock();
 
 	g_menu = true;
 	g_win = false;
@@ -258,6 +259,7 @@ int	Game::NewBall() {
 		g_currentBall = g_remainingBalls.at(g_remainingBalls.size() - 1);
 		g_remainingBalls.pop_back();
 		g_currentBall->SetPos(g_canon->o_posX, g_window->GetHeight() - 25);
+		g_canon->o_sprite.setColor(sf::Color(255, 255, 255, 255));
 		return 1;
 	}
 	return 0;
@@ -268,6 +270,8 @@ void	Game::SendBall() {
 		g_ballNum--;
 		g_currentBall->SetDirection(g_canon->o_angle);
 		g_currentBall->isMoving = true;
+		g_canon->o_sprite.setColor(sf::Color(255, 255, 255, 128));
+		g_shotClock->restart();
 	}
 }
 
@@ -281,7 +285,7 @@ void Game::ClearBricks() {
 		for (int i = 0; i < g_bricksNum; i++) {
 			if (g_bricks.at(i)->o_life == 0)
 			{
-				AddBall();
+				//AddBall();
 				brick = g_bricks.at(i);
 				g_bricks.erase(g_bricks.begin() + i);
 				delete brick;
@@ -304,7 +308,7 @@ void Game::HandleEvents() {
 	{
 		if (event.type == Event::Closed)
 			CloseWindow();
-		if (Mouse::isButtonPressed(Mouse::Button::Left)) {
+		if (Mouse::isButtonPressed(Mouse::Button::Left) and g_window->w_window->hasFocus()) {
 			if (!g_currentBall) {
 				g_lose = true;
 				g_isRunning = false;
@@ -532,7 +536,7 @@ void Game::ChooseLevel() {
 			DrawMenu();
 			if (event.type == Event::Closed)
 				CloseWindow();
-			if (Mouse::isButtonPressed(Mouse::Button::Left))
+			if (Mouse::isButtonPressed(Mouse::Button::Left) and g_window->w_window->hasFocus())
 				GetPath(Mouse::getPosition(*g_window->w_window));
 		}
 	}
@@ -596,6 +600,14 @@ void Game::Start() {
 			if (g_currentBall->o_shouldMove) {
 				g_currentBall->Move(g_deltaTime / g_numSim);
 			}
+		}
+		if (g_shotClock->getElapsedTime().asSeconds() > 5.0f and g_currentBall->isMoving) {
+			g_shotClock->restart();
+			g_currentBall->speed *= 1.5;
+		}
+		else if (g_shotClock->getElapsedTime().asSeconds() > 3.0f and g_currentBall->isMoving and g_currentBall->speed != 500.0f) {
+			g_shotClock->restart();
+			g_currentBall->speed *= 1.5;
 		}
 	}
 	ChangetoEndMusic();

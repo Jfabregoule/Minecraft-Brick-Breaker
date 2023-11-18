@@ -72,7 +72,7 @@ void GameObject::DecreaseLife(GameObject* Object, int value){
 		Object->o_life = Object->o_life - value;
 	switch (Object->o_life) {
 	case (1):
-		o_sprite.setColor(sf::Color::Red);
+		o_sprite.setColor(sf::Color::White);
 		break;
 	case (2):
 		o_sprite.setColor(sf::Color::Yellow);
@@ -81,16 +81,23 @@ void GameObject::DecreaseLife(GameObject* Object, int value){
 		o_sprite.setColor(sf::Color::Green);
 		break;
 	case (4):
-		o_sprite.setColor(sf::Color::Blue);
+		o_sprite.setColor(sf::Color::Cyan);
 		break;
 	case (5):
-		o_sprite.setColor(sf::Color::Magenta);
+		o_sprite.setColor(sf::Color::Blue);
 		break;
 	case (6):
-		o_sprite.setColor(sf::Color::White);
+		o_sprite.setColor(sf::Color::Magenta);
+		break;
+	case (7):
+		o_sprite.setColor(sf::Color::Red);
+		break;
+	case (8):
+		o_sprite.setColor(sf::Color::Black);
 		break;
 	}
 }
+
 
 /*
 ---------------------------------------------------------------------------------

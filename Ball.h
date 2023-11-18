@@ -6,6 +6,7 @@ class Ball : public GameObject
 {
 public:
 	bool			isMoving;
+	float			speed;
 
 	Ball(sf::Sprite* sprite);
 

@@ -31,8 +31,8 @@ BallNum\n\
 WidthxHeight\n\n \
 \
 You can change 0 by bricks health capped at 9\n \
-Width max is 13\n \
-Height max is 7\n \
+Width max is 31\n \
+Height max is 12\n \
 BallNum max is 999\n";
 }
 
@@ -165,13 +165,21 @@ bool		Map::IsMapFormated() {
 	return true;
 }
 
+bool		Map::IsSizeValid() {
+	if (m_sizeX <= 0 or m_sizeX > 31)
+		return false;
+	if (m_sizeY <= 0 or m_sizeY > 15)
+		return false;
+	return true;
+}
+
 void		Map::CheckMap() {
 	if (!IsConfigFormated() && !IsBallNumValid()) {
 		cout << m_error << endl;
 		exit(1);
 	}
 	GetSize();
-	if (!IsMapFormated())
+	if (!IsSizeValid() or !IsMapFormated())
 	{
 		cout << m_error << endl;
 		exit(1);
