@@ -25,6 +25,7 @@ private:
 	bool						g_win;
 	bool						g_lose;
 	int							g_level;
+	int							g_levelsDone;
 
 	Map*						g_map;
 	std::string					*g_filePath;
@@ -67,6 +68,7 @@ public:
 	void						Menu();
 	void						Start();
 	void						Generate();
+	void						GameReset();
 
 	~Game();
 private:

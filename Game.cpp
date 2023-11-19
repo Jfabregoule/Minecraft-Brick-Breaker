@@ -1,5 +1,4 @@
 #include <iostream>
-#include <iostream>
 #include <errno.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -24,7 +23,8 @@
 
 Game::Game() {
 
-	g_level = 0;
+	g_level = 1;
+	g_levelsDone = 0;
 	g_window = new GameWindow();
 	g_icon = new sf::Image();
 	g_music = new Music();
@@ -158,6 +158,7 @@ void	Game::GenerateCanon() {
 	g_canon->SetPos(g_window->GetWidth() / 2, g_window->GetHeight() - 25);
 	g_canon->SetOrientation(0, 1);
 }
+
 void	Game::GenerateHud() {
 	g_hud = new Hud(g_window);
 }
@@ -540,7 +541,6 @@ void Game::ChooseLevel() {
 				GetPath(Mouse::getPosition(*g_window->w_window));
 		}
 	}
-
 }
 
 void Game::Menu() {
@@ -583,6 +583,25 @@ void Game::Generate() {
 	PlayMusic();
 }
 
+void Game::GameReset() {
+	g_window->RefreshScreen();
+	delete g_map;
+	g_map = new Map();
+	delete g_filePath;
+	g_filePath = new std::string();
+	g_music->stop();
+	g_currentBall = NULL;
+	delete g_canon;
+	for (int i = 0; i < 4; ++i)
+		delete g_borders[i];
+	g_bricks.clear();
+	g_remainingBalls.clear();
+	g_backgrounds.clear();
+	g_sprites.clear();
+	g_menu = true;
+	g_level = 0;
+}
+
 
 void Game::Start() {
 	float	fps = 0;
@@ -608,6 +627,14 @@ void Game::Start() {
 		else if (g_shotClock->getElapsedTime().asSeconds() > 3.0f and g_currentBall->isMoving and g_currentBall->speed != 500.0f) {
 			g_shotClock->restart();
 			g_currentBall->speed *= 1.5;
+		}
+		if (g_win and g_levelsDone != 6) {
+			g_levelsDone++;
+			g_isRunning = true;
+			GameReset();
+			Menu();
+			Generate();
+			g_win = false;
 		}
 	}
 	ChangetoEndMusic();

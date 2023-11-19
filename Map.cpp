@@ -193,7 +193,6 @@ void		Map::CheckMap() {
 */
 
 void Map::ParseMap(string *filePath) {
-
 	ifstream input(*filePath);
 
 	if (!input.is_open()) {
@@ -219,7 +218,6 @@ void Map::ParseMap(string *filePath) {
 			m_vstr->push_back(line);
 		}
 	}
-
 	input.close();
 
 	*m_config = m_vstr->at(m_vstr->size() - 1);
